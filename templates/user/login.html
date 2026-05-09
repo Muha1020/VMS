@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell" style="max-width: 500px; margin: 4rem auto;">
+    <div class="premium-card-core">
+        <h2 class="premium-title">Welcome Back</h2>
+        <p class="premium-subtitle">Sign in to the Visitor Management System</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="premium-form-group">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" class="premium-input" required>
+            </div>
+            
+            <div class="premium-form-group">
+                <label for="id_password">Password</label>
+                <input type="password" name="password" id="id_password" class="premium-input" required>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button type="submit" class="premium-btn w-100">
+                    Sign In
+                    <div class="icon-wrapper">
+                        <i class="ph ph-arrow-right"></i>
+                    </div>
+                </button>
+            </div>
+        </form>
+        
+        <div style="margin-top: 2rem; text-align: center; display: flex; flex-direction: column; gap: 0.5rem;">
+            <a href="{% url 'reset_password' %}" style="color: var(--sidebar-text); text-decoration: none; font-size: 0.875rem;">Forgot Password?</a>
+            <p style="color: #71717A; font-size: 0.875rem; margin: 0;">Don't have an account? <a href="{% url 'register' %}" style="color: var(--accent); font-weight: 600; text-decoration: none;">Sign Up</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell" style="max-width: 800px; margin: 0 auto;">
+    <div class="premium-card-core">
+        <h2 class="premium-title">Register Visitor</h2>
+        <p class="premium-subtitle">Log a new visitor entry into the premises.</p>
+
+        <form method="POST" action="{% url 'visitor' %}">
+            {% csrf_token %}
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="premium-form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" id="first_name" class="premium-input" required>
+                </div>
+                <div class="premium-form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" id="last_name" class="premium-input" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="premium-form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" name="phone" id="phone" class="premium-input" required>
+                </div>
+                <div class="premium-form-group">
+                    <label for="email">Email Address (Optional)</label>
+                    <input type="email" name="email" id="email" class="premium-input">
+                </div>
+            </div>
+
+            <div class="premium-form-group">
+                <label for="host_name">Host Name</label>
+                <input type="text" name="host_name" id="host_name" class="premium-input" placeholder="Who are they here to see?" required>
+            </div>
+
+            <div class="premium-form-group">
+                <label for="purpose_of_visit">Purpose of Visit</label>
+                <input type="text" name="purpose_of_visit" id="purpose_of_visit" class="premium-input" required>
+            </div>
+            
+            <div class="premium-form-group">
+                <label for="address">Home/Office Address</label>
+                <textarea name="address" id="address" class="premium-input" rows="3" style="resize: vertical;"></textarea>
+            </div>
+
+            <div style="margin-top: 2.5rem; text-align: right;">
+                <button type="submit" class="premium-btn">
+                    Check In Visitor
+                    <div class="icon-wrapper">
+                        <i class="ph ph-check"></i>
+                    </div>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

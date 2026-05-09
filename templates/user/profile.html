@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell" style="max-width: 700px; margin: 0 auto;">
+    <div class="premium-card-core">
+        <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+            <div style="position: relative;">
+                {% if user.profile.image %}
+                    <img src="{{ user.profile.image.url }}" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid var(--bg-base); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                {% else %}
+                    <div style="width: 100px; height: 100px; border-radius: 50%; background: #E4E4E7; display: flex; align-items: center; justify-content: center; border: 4px solid var(--bg-base); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <i class="ph ph-user" style="font-size: 2.5rem; color: #A1A1AA;"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div>
+                <h2 class="premium-title" style="margin-bottom: 0;">{{ user.username }}</h2>
+                <p class="premium-subtitle" style="margin-bottom: 0.5rem; color: var(--accent);">{{ user.profile.dept|default:"No Department Assigned" }}</p>
+                <p style="color: #71717A; font-size: 0.875rem;">{{ user.email }}</p>
+            </div>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: #111;">Update User Info</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                {% for field in u_form %}
+                <div class="premium-form-group" style="margin-bottom: 0;">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" value="{{ field.value|default:'' }}" class="premium-input" {% if field.field.required %}required{% endif %}>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: #111;">Update Profile Details</h3>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                <div class="premium-form-group">
+                    <label for="{{ p_form.dept.id_for_label }}">{{ p_form.dept.label }}</label>
+                    <input type="text" name="{{ p_form.dept.html_name }}" id="{{ p_form.dept.id_for_label }}" value="{{ p_form.dept.value|default:'' }}" class="premium-input">
+                </div>
+                
+                <div class="premium-form-group">
+                    <label for="{{ p_form.image.id_for_label }}">Profile Picture</label>
+                    <input type="file" name="{{ p_form.image.html_name }}" id="{{ p_form.image.id_for_label }}" class="premium-input" accept="image/*" style="padding: 0.65rem 1.25rem;">
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: right;">
+                <button type="submit" class="premium-btn">
+                    Save Changes
+                    <div class="icon-wrapper">
+                        <i class="ph ph-floppy-disk"></i>
+                    </div>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

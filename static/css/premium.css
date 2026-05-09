@@ -1,0 +1,365 @@
+/* 
+   premium.css 
+   Overrides default template styling with Soft Structuralism & High-End UX 
+*/
+
+:root {
+    /* Color Palette */
+    --bg-base: #F8F9FA;         /* Soft silver-grey background */
+    --bg-surface: #FFFFFF;      /* Pure white cards */
+    --sidebar-bg: #0A0A0B;      /* Deep OLED black for contrast */
+    --sidebar-text: #A1A1AA;    /* Muted grey text */
+    --sidebar-text-hover: #FFFFFF;
+    --accent: #171717;          /* Dark accent for buttons */
+    --accent-light: rgba(0,0,0,0.05);
+    
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Spacing & Radii */
+    --radius-lg: 1.5rem;
+    --radius-md: 1rem;
+    --radius-sm: 0.5rem;
+    
+    /* Motion */
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.1); /* Natural bounce */
+    --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-base);
+    color: #27272A;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   LAYOUT STRUCTURE
+   ========================================================================== */
+.page-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Sidebar --- */
+.page-sidebar {
+    width: 280px;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+ul.x-navigation {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Logo */
+.xn-logo {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+.xn-logo a {
+    color: #FFF;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+}
+
+/* Profile Section */
+.xn-profile {
+    margin-bottom: 2.5rem;
+    background: rgba(255,255,255,0.03);
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.05);
+    text-align: center;
+}
+.profile-image img, .avatar-placeholder-large {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    background: #27272A;
+    border: 2px solid rgba(255,255,255,0.1);
+    object-fit: cover;
+}
+.profile-data-name {
+    color: #FFF;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.profile-data-title {
+    font-size: 0.8rem;
+    color: var(--sidebar-text);
+    margin-top: 0.25rem;
+}
+.x-navigation li a.profile-mini { display: none !important; }
+
+/* Constrain all images in the sidebar globally as a fallback */
+.page-sidebar img { max-width: 100%; height: auto; }
+
+/* Navigation Links */
+.xn-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.3);
+}
+
+.x-navigation li a {
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    transition: all 0.4s var(--ease-fluid);
+}
+.x-navigation li a i {
+    font-size: 1.25rem;
+    margin-right: 1rem;
+    transition: transform 0.4s var(--ease-spring);
+}
+.x-navigation li a:hover {
+    color: var(--sidebar-text-hover);
+    background: rgba(255,255,255,0.05);
+}
+.x-navigation li a:hover i {
+    transform: scale(1.1) translateX(2px);
+}
+
+/* --- Main Content Area --- */
+.page-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: var(--bg-base);
+}
+
+/* Top Horizontal Nav */
+.x-navigation-horizontal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    background: transparent;
+    list-style: none;
+    margin: 0;
+}
+.xn-icon-button a, .logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    transition: all 0.4s var(--ease-fluid);
+    cursor: pointer;
+}
+.logout-btn i { font-size: 1.25rem; }
+.xn-icon-button a:hover, .logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    padding: 2rem 3rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   THE "DOUBLE-BEZEL" CARD ARCHITECTURE
+   ========================================================================== */
+.premium-card-shell {
+    background: rgba(0,0,0,0.02);
+    padding: 0.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0,0,0,0.04);
+    margin-bottom: 2rem;
+    /* Initial state for scroll reveal */
+    animation: fadeUpIn 0.8s var(--ease-fluid) forwards;
+}
+
+.premium-card-core {
+    background: var(--bg-surface);
+    border-radius: calc(var(--radius-lg) - 0.5rem);
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,1);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Typography Overrides */
+.premium-title {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: #111;
+}
+.premium-subtitle {
+    color: #71717A;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+/* Premium Forms & Inputs */
+.premium-form-group {
+    margin-bottom: 1.5rem;
+}
+.premium-form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #3F3F46;
+    margin-bottom: 0.5rem;
+}
+.premium-input {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    background: #F4F4F5;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: #111;
+    transition: all 0.3s var(--ease-fluid);
+    box-sizing: border-box;
+}
+.premium-input:focus {
+    outline: none;
+    background: #FFF;
+    border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.02);
+}
+
+/* Premium Button Architecture */
+.premium-btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--accent);
+    color: #FFF;
+    padding: 0.75rem 1.5rem 0.75rem 2rem;
+    border-radius: 9999px; /* full pill */
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.4s var(--ease-spring);
+}
+.premium-btn:hover {
+    transform: scale(0.98);
+    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.3);
+}
+.premium-btn .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    margin-left: 1rem;
+    transition: all 0.4s var(--ease-spring);
+}
+.premium-btn:hover .icon-wrapper {
+    transform: translateX(4px) scale(1.05);
+    background: #FFF;
+    color: var(--accent);
+}
+
+/* Animations */
+@keyframes fadeUpIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+/* ==========================================================================
+   SIDEBAR RETRACTION (MINIMIZED STATE)
+   ========================================================================== */
+.page-sidebar {
+    transition: width 0.4s var(--ease-fluid);
+}
+
+.page-container.sidebar-minimized .page-sidebar {
+    width: 80px;
+    padding: 2rem 0.5rem;
+}
+
+/* Hide bulky items when minimized */
+.page-container.sidebar-minimized .xn-logo a,
+.page-container.sidebar-minimized .profile,
+.page-container.sidebar-minimized .nav-text,
+.page-container.sidebar-minimized .xn-title {
+    display: none !important;
+}
+
+/* Adjust logo icon fallback for minimized */
+.page-container.sidebar-minimized .xn-logo::before {
+    content: "V";
+    color: #FFF;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Show mini profile and adjust layout */
+.page-container.sidebar-minimized .profile-mini {
+    display: block !important;
+    text-align: center;
+}
+.page-container.sidebar-minimized .profile-mini img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+.page-container.sidebar-minimized .xn-profile {
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+/* Center nav icons */
+.page-container.sidebar-minimized .x-navigation li a {
+    justify-content: center;
+    padding: 0.875rem 0;
+}
+.page-container.sidebar-minimized .x-navigation li a i {
+    margin-right: 0;
+    font-size: 1.5rem;
+}

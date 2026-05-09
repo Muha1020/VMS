@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell">
+    <div class="premium-card-core">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h2 class="premium-title">Visitor Report</h2>
+                <p class="premium-subtitle">Comprehensive log of all visitors.</p>
+            </div>
+            <div>
+                <button class="premium-btn" onclick="window.print()" style="background: var(--bg-base); color: #111; border: 1px solid rgba(0,0,0,0.1);">
+                    Print Log
+                    <div class="icon-wrapper" style="background: rgba(0,0,0,0.05); color: #111;">
+                        <i class="ph ph-printer"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div style="overflow-x: auto; background: var(--bg-base); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.03); padding: 1px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead style="background: rgba(0,0,0,0.02);">
+                    <tr>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Name</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Phone</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Host</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Purpose</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Check In</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for v in visitors %}
+                    <tr style="border-top: 1px solid rgba(0,0,0,0.03); background: #FFF; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.01)'" onmouseout="this.style.background='#FFF'">
+                        <td style="padding: 1.25rem 1.5rem; font-weight: 500; color: #111;">{{ v.first_name }} {{ v.last_name }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ v.phone }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ v.host_name }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ v.purpose_of_visit }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ v.check_in_time|date:"M d, Y H:i" }}</td>
+                        <td style="padding: 1.25rem 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="background: {% if v.status == 'Checked In' %}rgba(34, 197, 94, 0.1){% else %}rgba(161, 161, 170, 0.1){% endif %}; 
+                                             color: {% if v.status == 'Checked In' %}#166534{% else %}#52525B{% endif %}; 
+                                             padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem;">
+                                    {% if v.status == 'Checked In' %}
+                                        <div style="width: 6px; height: 6px; border-radius: 50%; background: #22C55E;"></div>
+                                    {% else %}
+                                        <div style="width: 6px; height: 6px; border-radius: 50%; background: #A1A1AA;"></div>
+                                    {% endif %}
+                                    {{ v.status }}
+                                </span>
+                                {% if v.status == 'Checked In' and user.profile.dept == 'Security Unit' %}
+                                <form method="POST" action="{% url 'checkout_visitor' v.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: var(--accent); font-size: 0.75rem; font-weight: 600; text-decoration: underline;">
+                                        Check Out
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="padding: 3rem 1.5rem; text-align: center; color: #A1A1AA; background: #FFF;">
+                            <i class="ph ph-folder-open" style="font-size: 3rem; margin-bottom: 1rem; color: #E4E4E7; display: block;"></i>
+                            No records found in the database.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

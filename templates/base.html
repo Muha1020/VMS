@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Visitor Management System</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Premium Font: Plus Jakarta Sans -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Icons: Phosphor Icons (Lightweight & Premium) -->
+        <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+        <!-- Base CSS structure -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+        
+        <!-- Premium Overrides -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/premium.css' %}"/>
+    </head>
+    <body>
+        <!-- START PAGE CONTAINER -->
+        <div class="page-container">
+            <!-- START PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <ul class="x-navigation">
+                    <li class="xn-logo">
+                        <a href="{% url 'Welcome' %}">VMS</a>
+                        <a href="#" class="x-navigation-control"></a>
+                    </li>
+                    <li class="xn-profile">
+                        <a href="{% url 'profile' %}" class="profile-mini">
+                            {% if user.profile.image %}
+                                <img src="{{ user.profile.image.url }}" alt="Profile"/>
+                            {% else %}
+                                <div class="avatar-placeholder"></div>
+                            {% endif %}
+                        </a>
+                        <div class="profile">
+                            <div class="profile-image">
+                                {% if user.profile.image %}
+                                    <img src="{{ user.profile.image.url }}" alt="Profile"/>
+                                {% else %}
+                                    <div class="avatar-placeholder-large"></div>
+                                {% endif %}
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name">{{ user.first_name|default:user.username }} {{ user.last_name }}</div>
+                                <div class="profile-data-title">{{ user.profile.dept|default:"Staff" }}</div>
+                            </div>
+                        </div>                                                                        
+                    </li>
+                    <li class="xn-title">Navigation</li>
+                    <li>
+                        <a href="{% url 'index' %}"><i class="ph ph-squares-four"></i> <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    {% if user.profile.dept == 'Security Unit' %}  
+                    <li>
+                        <a href="{% url 'visitor' %}"><i class="ph ph-user-plus"></i> <span class="nav-text">Visitor</span></a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'report' %}"><i class="ph ph-file-text"></i> <span class="nav-text">Report</span></a>                                
+                    </li>
+                    <li class="xn-title">Account</li>
+                    <li>
+                        <a href="{% url 'profile' %}"><i class="ph ph-user-circle"></i> <span class="nav-text">My Profile</span></a>                                
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE SIDEBAR -->
+
+            <!-- PAGE CONTENT -->
+            <div class="page-content">
+                <!-- START X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                    <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="#" class="x-navigation-minimize"><i class="ph ph-list"></i></a>
+                    </li>
+                    <!-- END TOGGLE NAVIGATION -->
+                 
+                    <li class="xn-icon-button pull-right last">
+                        <!-- Standard form post for logout in newer Django versions -->
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn"><i class="ph ph-power"></i></button>
+                        </form>                                       
+                    </li>
+                </ul>
+                <!-- END X-NAVIGATION VERTICAL -->  
+                                   
+                <!-- CONTENT WRAPPER FOR PREMIUM SPACING -->
+                <div class="content-wrapper">
+                    {% if messages %}
+                        <div class="messages-container">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} premium-alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% block content %}{% endblock %}            
+                </div>
+            </div>
+            <!-- END PAGE CONTENT -->
+        </div>
+        <!-- END PAGE CONTAINER -->
+            
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/actions.js' %}"></script>
+    </body>
+</html>

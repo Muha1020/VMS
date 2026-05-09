@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell" style="max-width: 500px; margin: 4rem auto;">
+    <div class="premium-card-core">
+        <h2 class="premium-title">Create Account</h2>
+        <p class="premium-subtitle">Register a new user in the system</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% for field in form %}
+            <div class="premium-form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field.errors }}
+                <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="premium-input" {% if field.field.required %}required{% endif %}>
+                {% if field.help_text %}
+                    <small style="color: #A1A1AA; font-size: 0.75rem; display: block; margin-top: 0.25rem;">{{ field.help_text|safe }}</small>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div style="margin-top: 2.5rem;">
+                <button type="submit" class="premium-btn w-100">
+                    Register User
+                    <div class="icon-wrapper">
+                        <i class="ph ph-user-plus"></i>
+                    </div>
+                </button>
+            </div>
+        </form>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <p style="color: #71717A; font-size: 0.875rem;">Already have an account? <a href="{% url 'login' %}" style="color: var(--accent); font-weight: 600; text-decoration: none;">Sign In</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

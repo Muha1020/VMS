@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell" style="max-width: 600px; margin: 4rem auto;">
+    <div class="premium-card-core" style="text-align: center;">
+        <i class="ph ph-buildings" style="font-size: 4rem; color: var(--accent); margin-bottom: 1rem;"></i>
+        <h2 class="premium-title">Al-Hikmah University</h2>
+        <p class="premium-subtitle">Computerized Visitor Management System</p>
+        
+        <div style="margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            {% if user.is_authenticated %}
+                <a href="{% url 'index' %}" class="premium-btn w-100" style="justify-content: center;">
+                    Go to Dashboard
+                    <div class="icon-wrapper">
+                        <i class="ph ph-arrow-right"></i>
+                    </div>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="premium-btn w-100" style="justify-content: center;">
+                    Sign In
+                    <div class="icon-wrapper">
+                        <i class="ph ph-sign-in"></i>
+                    </div>
+                </a>
+                
+                <a href="{% url 'register' %}" class="premium-btn w-100" style="justify-content: center; background: var(--bg-base); color: var(--accent); border: 1px solid rgba(0,0,0,0.1);">
+                    Create Account
+                    <div class="icon-wrapper" style="background: rgba(0,0,0,0.05); color: var(--accent);">
+                        <i class="ph ph-user-plus"></i>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
