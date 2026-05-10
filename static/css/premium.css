@@ -363,3 +363,64 @@ ul.x-navigation {
     margin-right: 0;
     font-size: 1.5rem;
 }
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    z-index: 40;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-fluid);
+}
+
+@media (max-width: 768px) {
+    .page-sidebar {
+        position: fixed;
+        left: -300px;
+        top: 0;
+        height: 100vh;
+        height: 100dvh; /* Dynamic viewport height for iOS/Android */
+        z-index: 50;
+        transition: left 0.4s var(--ease-fluid);
+    }
+    
+    .page-container.sidebar-mobile-open .page-sidebar {
+        left: 0;
+    }
+    
+    .page-container.sidebar-mobile-open .mobile-overlay {
+        display: block;
+        opacity: 1;
+    }
+
+    .page-content {
+        width: 100vw;
+    }
+    
+    .content-wrapper {
+        padding: 1.5rem 1rem 4rem;
+    }
+    
+    .x-navigation-horizontal {
+        padding: 1rem 1.5rem;
+    }
+    
+    .premium-card-core {
+        padding: 1.5rem;
+    }
+    
+    /* Override inline grids to single column on mobile */
+    div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .premium-title {
+        font-size: 1.5rem;
+    }
+}
