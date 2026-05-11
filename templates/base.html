@@ -69,6 +69,11 @@
                     <li>
                         <a href="{% url 'profile' %}"><i class="ph ph-user-circle"></i> <span class="nav-text">My Profile</span></a>                                
                     </li>
+                    {% if user.is_superuser %}
+                    <li>
+                        <a href="/admin/" target="_blank"><i class="ph ph-shield-check"></i> <span class="nav-text">System Admin</span></a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <!-- END PAGE SIDEBAR -->
