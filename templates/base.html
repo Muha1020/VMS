@@ -63,8 +63,13 @@
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{% url 'report' %}"><i class="ph ph-file-text"></i> <span class="nav-text">Report</span></a>                                
+                        <a href="{% url 'report' %}"><i class="ph ph-file-text"></i> <span class="nav-text">Report</span></a>
                     </li>
+                    {% if user.profile.dept == 'Security Unit' %}
+                    <li>
+                        <a href="{% url 'blacklist_list' %}"><i class="ph ph-prohibit"></i> <span class="nav-text">Blacklist</span></a>
+                    </li>
+                    {% endif %}
                     <li class="xn-title">Account</li>
                     <li>
                         <a href="{% url 'profile' %}"><i class="ph ph-user-circle"></i> <span class="nav-text">My Profile</span></a>                                

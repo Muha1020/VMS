@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell">
+    <div class="premium-card-core">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h2 class="premium-title">Blacklist</h2>
+                <p class="premium-subtitle">Visitors denied entry to campus.</p>
+            </div>
+        </div>
+
+        <div style="overflow-x: auto; background: var(--bg-base); border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.03); padding: 1px;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead style="background: rgba(0,0,0,0.02);">
+                    <tr>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Name</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Phone</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Reason</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Blacklisted By</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Date</th>
+                        <th style="padding: 1.25rem 1.5rem; color: #3F3F46; font-weight: 600; font-size: 0.875rem;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in entries %}
+                    <tr style="border-top: 1px solid rgba(0,0,0,0.03); background: #FFF; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.01)'" onmouseout="this.style.background='#FFF'">
+                        <td style="padding: 1.25rem 1.5rem; font-weight: 500; color: #111;">{{ entry.first_name }} {{ entry.last_name }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ entry.phone }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem; max-width: 280px;">{{ entry.reason }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ entry.blacklisted_by.get_full_name|default:entry.blacklisted_by.username }}</td>
+                        <td style="padding: 1.25rem 1.5rem; color: #52525B; font-size: 0.95rem;">{{ entry.blacklisted_at|date:"M d, Y H:i" }}</td>
+                        <td style="padding: 1.25rem 1.5rem;">
+                            <form method="POST" action="{% url 'remove_blacklist' entry.id %}" onsubmit="return confirm('Remove {{ entry.first_name }} {{ entry.last_name }} from the blacklist?');">
+                                {% csrf_token %}
+                                <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer; color: #22C55E; font-size: 0.75rem; font-weight: 600; text-decoration: underline;">
+                                    Remove
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="padding: 3rem 1.5rem; text-align: center; color: #A1A1AA; background: #FFF;">
+                            <i class="ph ph-shield-check" style="font-size: 3rem; margin-bottom: 1rem; color: #E4E4E7; display: block;"></i>
+                            No blacklisted visitors.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="premium-card-shell">
+    <div class="premium-card-core">
+        <h2 class="premium-title">Blacklist Visitor</h2>
+        <p class="premium-subtitle">This will prevent <strong>{{ visitor.first_name }} {{ visitor.last_name }}</strong> ({{ visitor.phone }}) from checking in again.</p>
+
+        <form method="POST" style="margin-top: 2rem;">
+            {% csrf_token %}
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.875rem; font-weight: 600; color: #3F3F46; margin-bottom: 0.5rem;">Reason for Blacklisting</label>
+                <textarea name="reason" rows="4" required placeholder="State the reason clearly..." style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.95rem; resize: vertical; outline: none;"></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" style="background: #DC2626; color: #fff; border: none; padding: 0.65rem 1.5rem; border-radius: 999px; font-weight: 600; font-size: 0.875rem; cursor: pointer;">
+                    Confirm Blacklist
+                </button>
+                <a href="{% url 'report' %}" style="display: inline-flex; align-items: center; padding: 0.65rem 1.5rem; border-radius: 999px; border: 1px solid rgba(0,0,0,0.1); font-weight: 600; font-size: 0.875rem; color: #3F3F46; text-decoration: none;">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
