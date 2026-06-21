@@ -4,8 +4,13 @@
 {% block content %}
 <div class="premium-card-shell" style="max-width: 500px; margin: 4rem auto;">
     <div class="premium-card-core">
+        {% if request.GET.new %}
+        <h2 class="premium-title">Account Created!</h2>
+        <p class="premium-subtitle">Sign in to get started.</p>
+        {% else %}
         <h2 class="premium-title">Welcome Back</h2>
         <p class="premium-subtitle">Sign in to the Visitor Management System</p>
+        {% endif %}
 
         <form method="POST">
             {% csrf_token %}

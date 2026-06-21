@@ -24,7 +24,7 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created successfully. Please sign in.')
-            return redirect('login')
+            return redirect('/login/?new=1')
     else:
         form = UserRegisterForm()       
     return render(request, 'user/register.html', {'form':form, 'reg':reg})
@@ -65,16 +65,16 @@ def password_reset_request(request):
                     email_template_name = "user/password_reset_email.txt"
                     c = {
                     "email":user.email,
-                    'domain':'127.0.0.1:8000',
-                    'site_name': 'Website',
+                    'domain': request.get_host(),
+                    'site_name': 'VMS',
                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
                     "user": user,
                     'token': default_token_generator.make_token(user),
-                    'protocol': 'http',
+                    'protocol': 'https' if request.is_secure() else 'http',
                     }
                     email = render_to_string(email_template_name, c)
                     try:
-                        send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+                        send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse('Invalid header found.')
                     return redirect ("/index/")
