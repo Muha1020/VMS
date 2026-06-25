@@ -39,6 +39,7 @@
                         <th style="padding: 1rem 0; color: #71717A; font-weight: 600; font-size: 0.875rem;">Visitor Name</th>
                         <th style="padding: 1rem 0; color: #71717A; font-weight: 600; font-size: 0.875rem;">Host</th>
                         <th style="padding: 1rem 0; color: #71717A; font-weight: 600; font-size: 0.875rem;">Check In</th>
+                        <th style="padding: 1rem 0; color: #71717A; font-weight: 600; font-size: 0.875rem;">Check Out</th>
                         <th style="padding: 1rem 0; color: #71717A; font-weight: 600; font-size: 0.875rem;">Status</th>
                     </tr>
                 </thead>
@@ -48,6 +49,13 @@
                         <td style="padding: 1rem 0; font-weight: 500;">{{ v.first_name }} {{ v.last_name }}</td>
                         <td style="padding: 1rem 0; color: #52525B;">{{ v.host_name }}</td>
                         <td style="padding: 1rem 0; color: #52525B;">{{ v.check_in_time|date:"H:i A" }}</td>
+                        <td style="padding: 1rem 0; color: #52525B;">
+                            {% if v.check_out_time %}
+                                {{ v.check_out_time|date:"H:i A" }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
                         <td style="padding: 1rem 0;">
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
                                 <span style="background: rgba(0,0,0,0.05); padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">
@@ -66,7 +74,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="4" style="padding: 2rem 0; text-align: center; color: #A1A1AA;">No recent visitors found.</td>
+                        <td colspan="5" style="padding: 2rem 0; text-align: center; color: #A1A1AA;">No recent visitors found.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
